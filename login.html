@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>signin form</h1>
+    <input placeholder="Email" type="text" name="" id="lemail">
+    <input placeholder="Password" type="password" name="" id="lpass">
+    <button id="lbtn">Signin</button>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAB4R88Bx8C_FcpdvvUArPrsDWqg920um8",
+            authDomain: "kesa-diya.firebaseapp.com",
+            projectId: "kesa-diya",
+            storageBucket: "kesa-diya.appspot.com",
+            messagingSenderId: "647562127619",
+            appId: "1:647562127619:web:6d3a6583ad4a7a7967e136",
+            measurementId: "G-T809NVR1NH"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+       
+
+        let lbtn = document.getElementById('lbtn')
+        lbtn.addEventListener('click', () => {
+            let email = document.querySelector('#lemail').value
+            let password = document.querySelector('#lpass').value
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log(user.email)
+
+
+
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(error)
+                });
+        })
+    </script>
+</body>
+
+</html>

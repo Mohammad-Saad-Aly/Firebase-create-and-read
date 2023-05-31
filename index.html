@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1>signup form</h1>
+    <input placeholder="Email" type="text" name="" id="semail">
+    <input placeholder="Password" type="password" name="" id="spass">
+    <button id="sbtn">Signup</button>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAB4R88Bx8C_FcpdvvUArPrsDWqg920um8",
+            authDomain: "kesa-diya.firebaseapp.com",
+            projectId: "kesa-diya",
+            storageBucket: "kesa-diya.appspot.com",
+            messagingSenderId: "647562127619",
+            appId: "1:647562127619:web:6d3a6583ad4a7a7967e136",
+            measurementId: "G-T809NVR1NH"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase();
+
+        let btn = document.getElementById('sbtn')
+        btn.addEventListener('click', () => {
+            let email = document.querySelector('#semail').value
+            let password = document.querySelector('#spass').value
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+
+                    const user = userCredential.user;
+                    console.log(user)
+                    set(ref(db, 'users/' + user.uid), {
+                        email: email,
+                        password: password
+                    });
+
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(error)
+                });
+        })
+    </script>
+</body>
+
+</html>

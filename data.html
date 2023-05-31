@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <button id="showText">Show data</button>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAB4R88Bx8C_FcpdvvUArPrsDWqg920um8",
+            authDomain: "kesa-diya.firebaseapp.com",
+            projectId: "kesa-diya",
+            storageBucket: "kesa-diya.appspot.com",
+            messagingSenderId: "647562127619",
+            appId: "1:647562127619:web:6d3a6583ad4a7a7967e136",
+            measurementId: "G-T809NVR1NH"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+
+        let show = document.getElementById('showText')
+        show.addEventListener('click', () => {
+            const starCountRef = ref(db, 'users/');
+            onValue(starCountRef, (snapshot) => {
+                const data = snapshot.val();
+                console.log(data)
+                for(var key in data){
+                    document.write(key+" : ",data[key].email,"<br>")
+                }
+            });
+
+        })
+
+    </script>
+
+</body>
+
+</html>
